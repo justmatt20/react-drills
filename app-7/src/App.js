@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import NewTask from './newTask';
+import List from './List'
+// import ToDo from './ToDo'
 
-function App() {
+class App extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      todo: [],
+      inputText: '',
+    
+    }
+  }
+    
+  handleChange = (e) => {
+      this.setState({inputText: e.target.value});
+    
+  }
+
+  buttonClick = () => {
+      const newTodos = [...this.state.todo];
+      newTodos.push(this.state.inputText);
+      this.setState({todo: newTodos, inputText: ' '});
+  }
+
+
+  render() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* <ToDo/> */}
+      <NewTask />
+      <List />
+      <h1>My to do list!</h1>
+        <input value={this.state.inputText} onChange={this.handleChange}/>
+        <button onClick={this.buttonClick}>Add</button>
+        <ul>{this.state.todo.map(todo => <li>{todo}</li>)}</ul>
     </div>
-  );
-}
+  )
+  }
+};
+
 
 export default App;
+
